@@ -41,6 +41,46 @@ activities = {
     }
 }
 
+# Additional activities
+activities.update({
+    "Soccer Team": {
+        "description": "Competitive soccer team practicing drills and matches",
+        "schedule": "Tuesdays and Thursdays, 4:00 PM - 6:00 PM",
+        "max_participants": 22,
+        "participants": ["alex@mergington.edu"]
+    },
+    "Basketball Club": {
+        "description": "Pick-up games and skill development for basketball enthusiasts",
+        "schedule": "Wednesdays and Fridays, 4:30 PM - 6:00 PM",
+        "max_participants": 15,
+        "participants": ["taylor@mergington.edu"]
+    },
+    "Art Club": {
+        "description": "Explore drawing, painting, and mixed media projects",
+        "schedule": "Mondays, 3:30 PM - 5:00 PM",
+        "max_participants": 20,
+        "participants": ["riley@mergington.edu"]
+    },
+    "Drama Club": {
+        "description": "Acting, stagecraft, and production for school plays",
+        "schedule": "Thursdays, 3:30 PM - 5:30 PM",
+        "max_participants": 25,
+        "participants": ["casey@mergington.edu"]
+    },
+    "Debate Team": {
+        "description": "Prepare for inter-school debate competitions and practice public speaking",
+        "schedule": "Wednesdays, 3:30 PM - 5:00 PM",
+        "max_participants": 16,
+        "participants": ["jamie@mergington.edu"]
+    },
+    "Science Club": {
+        "description": "Hands-on experiments, research projects, and science fairs",
+        "schedule": "Fridays, 3:30 PM - 5:00 PM",
+        "max_participants": 18,
+        "participants": ["pat@mergington.edu"]
+    }
+})
+
 
 @app.get("/")
 def root():
@@ -64,4 +104,6 @@ def signup_for_activity(activity_name: str, email: str):
 
     # Add student
     activity["participants"].append(email)
-    return {"message": f"Signed up {email} for {activity_name}"}
+    # Check if the student is already registered
+    if email in activity["participants"]:
+        raise HTTPException(status_code=400, detail="Student already registered for this activity") 
